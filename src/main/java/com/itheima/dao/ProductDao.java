@@ -11,4 +11,7 @@ public interface ProductDao {
     List<Product> findNew() throws SQLException;
     //查询最热商品
     List<Product> findIsHot() throws SQLException;
+
+    //展示商品详情
+    Product pinfo(String pid) throws SQLException;
 }

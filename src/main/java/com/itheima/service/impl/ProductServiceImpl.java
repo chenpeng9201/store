@@ -36,4 +36,16 @@ public class ProductServiceImpl implements ProductService {
         }
         return productListHot;
     }
+
+    //展示商品详情
+    @Override
+    public Product pinfo(String pid) {
+        Product product = null;
+        try {
+            product = productDao.pinfo(pid);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return product;
+    }
 }

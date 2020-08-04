@@ -4,6 +4,7 @@ import com.itheima.dao.ProductDao;
 import com.itheima.domain.Product;
 import com.itheima.utils.C3P0Utils;
 import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 
 import java.io.IOException;
@@ -22,5 +23,13 @@ public class ProductDaoImpl implements ProductDao {
     public List<Product> findIsHot() throws SQLException {
         String sql = "select * from product where is_hot = 1 limit 9";
         return qr.query(sql,new BeanListHandler<Product>(Product.class));
+    }
+
+    //展示商品详情
+    @Override
+    public Product pinfo(String pid) throws SQLException {
+        String sql = "select * from product where pid = ?";
+        Object[] param = {pid};
+        return qr.query(sql,new BeanHandler<Product>(Product.class),param);
     }
 }

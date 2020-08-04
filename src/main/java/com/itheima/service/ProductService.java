@@ -7,4 +7,5 @@ import java.util.List;
 public interface ProductService {
     List<Product> findNew();
     List<Product> findIsHot();
+    Product pinfo(String pid);
 }
