@@ -1,13 +1,14 @@
 package com.itheima.dao.impl;
 
 import com.itheima.dao.ProductDao;
+import com.itheima.domain.PageBean;
 import com.itheima.domain.Product;
 import com.itheima.utils.C3P0Utils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.ScalarHandler;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -32,4 +33,23 @@ public class ProductDaoImpl implements ProductDao {
         Object[] param = {pid};
         return qr.query(sql,new BeanHandler<Product>(Product.class),param);
     }
+
+
+    //分页查询每个分类下的商品
+    @Override
+    public List<Product> productList(int currentPage, int pageSize, String cid) throws SQLException{
+        String sql = "select * from product where cid = ? limit ?,?";
+        return qr.query(sql,new BeanListHandler<Product>(Product.class),cid,(currentPage-1)*pageSize,pageSize);
+    }
+
+
+    //查询分类下的总页数
+    @Override
+    public Long totalCount(String cid) throws SQLException {
+        String sql = "select count(1) from product where cid = ?";
+        Long query = qr.query(sql, new ScalarHandler<Long>(), cid);
+        return query;
+    }
+
+
 }

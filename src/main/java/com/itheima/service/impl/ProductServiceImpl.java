@@ -1,6 +1,7 @@
 package com.itheima.service.impl;
 
 import com.itheima.dao.ProductDao;
+import com.itheima.domain.PageBean;
 import com.itheima.domain.Product;
 import com.itheima.service.ProductService;
 import com.itheima.utils.BeanFactory;
@@ -47,5 +48,24 @@ public class ProductServiceImpl implements ProductService {
             e.printStackTrace();
         }
         return product;
+    }
+
+    //分页查询分类下的商品
+    @Override
+    public PageBean<Product> findByPage(int currentPage, int pageSize, String cid) {
+        PageBean<Product> pb = new PageBean<>();
+        try {
+            List<Product> products = productDao.productList(currentPage, pageSize, cid);
+            Long totalCount = productDao.totalCount(cid);
+            pb.setCurrentPage(currentPage);
+            pb.setList(products);
+            pb.setPageSize(pageSize);
+            pb.setTotalCount(totalCount);
+            double ceil = Math.ceil(totalCount * 1.0 / pageSize);
+            pb.setTotalPage((int)ceil);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return pb;
     }
 }

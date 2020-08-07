@@ -1,5 +1,6 @@
 package com.itheima.web;
 
+import com.itheima.domain.PageBean;
 import com.itheima.domain.Product;
 import com.itheima.service.ProductService;
 import com.itheima.utils.BeanFactory;
@@ -41,6 +42,16 @@ public class ProductServlet extends BaseServlet {
         String pid = request.getParameter("pid");
         Product pinfo = ps.pinfo(pid);
         Result result = new Result(Result.SUCCESS,"查找成功",pinfo);
+        response.getWriter().print(JSONObject.fromObject(result));
+    }
+
+    void findByPage(HttpServletRequest request,HttpServletResponse response) throws IOException{
+        String cid = request.getParameter("cid");//获取商品分类
+        String currentPage = request.getParameter("pageNumber");
+        if (currentPage==null||"null".equals(currentPage))
+            currentPage = "1";
+        PageBean<Product> pb = ps.findByPage(Integer.parseInt(currentPage), 12, cid);
+        Result result = new Result(Result.SUCCESS,"查找成功",pb);
         response.getWriter().print(JSONObject.fromObject(result));
     }
 }
