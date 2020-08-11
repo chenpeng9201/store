@@ -5,7 +5,11 @@ public class test {
 
         /*String sxh = test.is_sxh(135);
         System.out.println(sxh);*/
-        test.divisible();
+       /* test.divisible();*/
+        Category category = null;
+        Category category1 = new Category();
+        System.out.println(category);
+        System.out.println(category1);
     }
     public static String is_sxh (int num){
         String s = Integer.toString(num);
@@ -30,6 +34,8 @@ public class test {
                 j++;
             }
             i++;
+
+
 
         }
     }
