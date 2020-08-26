@@ -34,6 +34,13 @@ public class CartServlet extends BaseServlet {
         response.getWriter().print(JSONObject.fromObject(rs));
     }
 
+    protected void cartList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //查询购物车列表
+        Cart cart = getCart(request);
+        Result rs = new Result(Result.SUCCESS,"查询成功",cart);
+        response.getWriter().print(JSONObject.fromObject(rs));
+    }
+
     private Cart getCart(HttpServletRequest request){
         Cart cart = (Cart)request.getSession().getAttribute("cart");
         if(cart==null){

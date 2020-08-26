@@ -16,7 +16,7 @@ import java.util.List;
 public class CategoryImpl implements CategoryDao {
     QueryRunner qr = new QueryRunner(C3P0Utils.getDataSource());
     //redis版本
-    @Override
+    /*@Override
     public List<Category> findAll() throws SQLException {
         List<Category> categoryList = null;
         Jedis jedis = JedisUtils.getJedis();
@@ -34,14 +34,14 @@ public class CategoryImpl implements CategoryDao {
         //关闭连接
         JedisUtils.close(jedis);
         return categoryList;
-    }
+    }*/
 
-    /*@Override
+    @Override
     public List<Category> findAll() throws SQLException {
         String sql = "select * from category";
         List<Category> categoryList = qr.query(sql, new BeanListHandler<Category>(Category.class));
         return categoryList;
-    }*/
+    }
 
 
 
