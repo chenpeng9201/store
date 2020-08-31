@@ -29,6 +29,20 @@ public class Cart {
         this.totalprice = totalprice;
     }
 
+    public void clearCartItem(){
+        //清空购物车
+        itemMap.clear();
+        //重新计算总价
+        totalprice = 0;
+    }
+
+    public void removeCartItem(String pid){
+        //移除购物项
+        CartItem cartItem = itemMap.remove(pid);
+        //重新计算总价
+        totalprice -= cartItem.getSubtotal();
+    }
+
     public void addCart(CartItem cartItem){
         String pid = cartItem.getProduct().getPid();
         if(itemMap.containsKey(pid)){
