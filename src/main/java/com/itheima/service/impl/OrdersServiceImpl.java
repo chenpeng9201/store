@@ -19,7 +19,7 @@ public class OrdersServiceImpl implements OrdersService {
     public void addOrders(Orders orders, List<OrderItem> orderItem) {
         Connection con = null;
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/store331","root","root");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/store331?serverTimezone=UTC","root","root");
             con.setAutoCommit(false);
             ordersDao.submitOrder(con,orders);
             for (OrderItem item : orderItem) {

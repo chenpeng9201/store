@@ -22,7 +22,7 @@ public class OrderDaoImpl implements OrdersDao {
     //提交订单项
     @Override
     public void submitOrderItem(Connection con, OrderItem orderItem) throws SQLException {
-        String sql = "insert into orderitem(itemid,count,subtotal,pid,oid) values(?,?,?,?)";
+        String sql = "insert into orderitem(itemid,count,subtotal,pid,oid) values(?,?,?,?,?)";
         Object[] param = {UUIDUtils.getUUID(),orderItem.getCount(),orderItem.getSubTotal(),orderItem.getPid(),orderItem.getOid()};
         qr.update(con,sql,param);
     }
