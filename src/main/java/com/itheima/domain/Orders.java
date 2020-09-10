@@ -1,5 +1,7 @@
 package com.itheima.domain;
 
+import java.util.List;
+
 public class Orders {
     // 订单id
     private String oid;
@@ -16,6 +18,17 @@ public class Orders {
     // 收获人电话
     private String telephone;
     private String uid;
+
+    //订单中可以包含多个订单项
+    private List<OrderItemView> orderItemList;
+
+    public List<OrderItemView> getOrderItemList() {
+        return orderItemList;
+    }
+
+    public void setOrderItemList(List<OrderItemView> orderItemList) {
+        this.orderItemList = orderItemList;
+    }
 
     public String getOid() {
         return oid;

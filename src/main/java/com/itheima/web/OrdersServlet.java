@@ -8,10 +8,8 @@ import net.sf.json.JSONObject;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,6 +20,31 @@ import java.util.List;
 @WebServlet(urlPatterns = "/orders")
 public class OrdersServlet extends BaseServlet {
     OrdersService ordersService = BeanFactory.newInstance(OrdersService.class);
+
+    protected void ordersListWithPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //查询我的订单列表
+        User user = (User)request.getSession().getAttribute("user");
+        if(user==null){
+            Result rs = new Result(Result.NOLOGIN,"尚未登录，请登录！");
+            response.getWriter().print(JSONObject.fromObject(rs));
+            return;
+        }
+        int pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
+        int pageSize = 3;
+        //获取订单集合
+        List<Orders> ordersList = ordersService.ordersListWithPage(user.getUid(), pageNumber, pageSize);
+        //获取订单总数量
+        long count = ordersService.ordersCount(user.getUid());
+        //开始封装PageBean对象
+        PageBean<Orders> ordersPageBean = new PageBean<>();
+        ordersPageBean.setPageSize(pageSize);
+        ordersPageBean.setCurrentPage(pageNumber);
+        ordersPageBean.setList(ordersList);
+        ordersPageBean.setTotalCount(count);
+        ordersPageBean.setTotalPage((int) Math.ceil(count*1.0/pageSize));
+        Result rs = new Result(Result.SUCCESS,"添加订单成功",ordersPageBean);
+        response.getWriter().print(JSONObject.fromObject(rs));
+    }
     protected void addOrders(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //添加订单
         //从session域购物车中获取订单所需数据

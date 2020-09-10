@@ -1,15 +1,22 @@
 package com.itheima.domain;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class test {
     public static void main(String[] args) {
 
         /*String sxh = test.is_sxh(135);
         System.out.println(sxh);*/
        /* test.divisible();*/
-        Category category = null;
+        /*Category category = null;
         Category category1 = new Category();
         System.out.println(category);
-        System.out.println(category1);
+        System.out.println(category1);*/
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String format = sdf.format(new Date());
+        System.out.println(format);
     }
     public static String is_sxh (int num){
         String s = Integer.toString(num);
